@@ -1,44 +1,38 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
+
+const List = (props) => {
+
+  const { up, upClick } = props
 
 
-export const fetchAgain = () => {
-  fetchData()
-}
-
-const List = () => {
-  
-  const [data, setData] = useState()
-  
-  useEffect(() => {
-    fetchData()
-  },[])
-  
-  const fetchData = async() => {
-    const fetchr = await fetch('http://localhost:5000/api/v2/products')
-    const res = await fetchr.json()
-    setData(res)
-  }
-
- const deleteData = async (id) => {
+  const deleteData = async (id) => {
     await fetch(`http://localhost:5000/api/v2/del/${id}`, {
       method: 'DELETE',
     });
+    upClick()
   };
-  
-
-  console.log(data)
 
   return (
     <div>
-        <h1 className='text-3xl font-bold py-2'>Product List</h1>
+      <h1 className='text-3xl font-bold py-2'>Product List</h1>
 
-        <div className='flex flex-col justify-center items-center'>
-            {
-                data?.map((p) => {
-                    return <div className='flex justify-around items-center'>{p.Name} <span onClick={() => {deleteData(p._id); fetchData()} } >Delete</span></div>
-                })
-            }
-        </div>
+      <div className='flex flex-col justify-center items-center'>
+        {
+          up?.map((p) => {
+            return (<div className='flex justify-around items-center bg-[#3b3b3b] p-2 gap-2'>
+              <img className='h-20' src={p.Image} alt={p.Name} />
+              <div>
+              <h1 className='text-xl font-semibold'>{p.Name}</h1>
+              <h4>{p.Price}$</h4>
+              <h4>{p.Rating}Stars</h4>
+              </div>
+              <span onClick={() => { deleteData(p._id); }} >
+              <i className="cursor-pointer px-2 fa-2x fa-solid fa-trash-can"></i>
+              </span>
+            </div>)
+          })
+        }
+      </div>
     </div>
   )
 }

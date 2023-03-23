@@ -1,12 +1,13 @@
-import Form from "./components/Form"
-import List from "./components/List"
+import Home from "./pages/Home"
 
 function App() {
 
   return (
-      <div className="px-20 pt-10 flex justify-around">
-        <Form/>
-        <List/>
+      <div>
+        <nav className="flex justify-center py-4 ">
+          <img className='h-16 w-36' src="./logo.jpg" alt="logo" />
+        </nav>
+        <Home/>
       </div>
   )
 }

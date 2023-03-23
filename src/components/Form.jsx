@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
-import { fetchAgain } from './List'
 
-const Form = () => {
+
+const Form = (props) => {
+
+  const { upClick} = props
 
   const [name, setName] = useState('')
   const [price, setPrice] = useState('')
@@ -19,8 +21,6 @@ const Form = () => {
     Rating: rating,
   }
 
-  console.log(inputModel)
-
   const link = 'http://localhost:5000/api/v2/add'
 
   const sendData = async () => {
@@ -32,10 +32,11 @@ const Form = () => {
       },
       body: JSON.stringify(inputModel),
     });
+    upClick() 
   };
 
   return (
-    <div onSubmit={(e) => {e.preventDefault(); sendData(); alert('Form Submitted...'); e.target.reset(); fetchAgain() }} className='flex flex-col justify-center items-center'>
+    <div onSubmit={(e) => {e.preventDefault(); sendData(); e.target.reset(); }} className='flex flex-col justify-center items-center'>
         <h1 className='text-3xl font-bold py-2'>ADD Product</h1>
        <form className="flex flex-col gap-4" method="post">
         <input onChange={(e) => setName(e.target.value)} className="px-4 py-2 outline-none" placeholder="Product Name" type="text" required/>
@@ -57,7 +58,7 @@ const Form = () => {
 
         <textarea onChange={(e) => setDes(e.target.value)} className="outline-none px-4 py-2" placeholder="Description here..." cols="5" rows="5" required></textarea>
         <input onChange={(e) => setImage(e.target.value)} className="px-4 py-2 outline-none" placeholder="Image Link" type="url" required/>
-        <input className="px-4 py-2 outline-none border-2" type="submit" value="SUBMIT" />
+        <input className="cursor-pointer hover:bg-white hover:text-[#3b3b3b] px-4 py-2 outline-none border-2" type="submit" value="SUBMIT" />
        </form>
       </div>
   )
